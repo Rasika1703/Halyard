@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { --ease: cubic-bezier(.22,.61,.36,1); --dur-fast: 120ms; --dur: 220ms; --shadow-1: 0 1px 2px rgb(16 25 22 / .06); --shadow-2: 0 8px 24px -8px rgb(16 25 22 / .18); }
+  .tnum { font-variant-numeric: tabular-nums; }
+  html { @apply bg-paper-100 text-ink-900 font-sans antialiased; }
+  h1 { font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem); }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-paper-100; }
+}
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-teal-600 text-white hover:bg-teal-700 active:bg-teal-700; }
+  .btn-ghost { @apply btn border border-paper-300 bg-paper-50 text-ink-900 hover:bg-paper-200; }
+  .btn-danger { @apply btn bg-alert-600 text-white hover:opacity-90; }
+  .field { @apply w-full rounded-md border border-paper-300 bg-white px-3 py-2 text-sm placeholder:text-ink-300 focus:border-teal-500; }
+  .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-ink-700; }
+  .panel { @apply rounded-lg border border-paper-300 bg-paper-50; box-shadow: var(--shadow-1); }
+  .page-in { animation: pagein var(--dur) var(--ease) both; }
+  @keyframes pagein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in { animation: fade .18s ease-out; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+.aurora { background: radial-gradient(60% 50% at 12% 8%, rgb(98 125 152 / .26), transparent 60%), radial-gradient(50% 45% at 92% 92%, rgb(34 199 184 / .14), transparent 60%), #0b1220; background-size: 140% 140%; animation: drift 20s ease-in-out infinite alternate; }
+@keyframes drift { to { background-position: 100% 100%; } }
+.dark-surface .label { color: #a9afb8; }
+.dark-surface .field { background: rgb(255 255 255 / .06); border-color: rgb(255 255 255 / .14); color: #fff; }
+.dark-surface .field:focus { border-color: #22c7b8; }
+.dark-surface .text-ink-700 { color: #a9afb8; }
+.dark-surface .panel { background: rgb(255 255 255 / .04); border-color: rgb(255 255 255 / .1); box-shadow: none; }
+.dark-surface h2, .dark-surface h3 { color: #f7f4ee; }
+.dark-surface .btn-primary { background: #22c7b8; color: #0b1220; }
+.dark-surface .btn-primary:hover { background: #5fd9ce; }
