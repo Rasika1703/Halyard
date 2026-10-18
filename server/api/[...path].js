@@ -1,10 +1,6 @@
-const handler = require('../src/server');
+
+const app = require('../src/app');
 
 module.exports = (req, res) => {
-
-  if (!req.url.startsWith('/api')) {
-    req.url = `/api${req.url.startsWith('/') ? '' : '/'}${req.url}`;
-  }
-
-  return handler(req, res);
+  return app(req, res);
 };
