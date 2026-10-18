@@ -1,3 +1,4 @@
+
 export class ApiError extends Error {
   constructor(status, body) {
     const e = body?.error || {};
@@ -9,11 +10,12 @@ export class ApiError extends Error {
   }
   get isConflict() { return this.status === 409; }
 }
+const API_BASE_URL = 'https://halyardd.vercel.app/api';
 
 async function request(method, path, body, headers = {}) {
   let res;
   try {
-    res = await fetch(`/api${path}`, {
+  res = await fetch(`${API_BASE_URL}${path}`, {
       method, credentials: 'include',
       headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'halyard', ...headers },
       body: body === undefined ? undefined : JSON.stringify(body),
