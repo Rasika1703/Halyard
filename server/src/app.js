@@ -9,7 +9,24 @@ const { errorHandler } = require('./middleware/error');
 const app = express();
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(cors({ origin: config.clientOrigins, credentials: true }));
+const allowedOrigins = [
+  'https://halyard-xi.vercel.app',
+  'https://halyard-git-main-rasika1703s-projects.vercel.app',
+  ...config.clientOrigins,
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Origin not allowed by CORS: ${origin}`));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'X-Requested-With', 'Idempotency-Key', 'X-CSRF-Token'],
+  optionsSuccessStatus: 204,
+}));
 app.use(express.json({ limit: '100kb' }));
 app.use(cookieParser());
 
